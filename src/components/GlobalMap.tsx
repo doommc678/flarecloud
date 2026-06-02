@@ -12,15 +12,15 @@ type Location = {
 };
 
 const LOCATIONS: Location[] = [
-  { city: "New York", country: "USA", x: 27.5, y: 38, flag: "🇺🇸" },
-  { city: "Los Angeles", country: "USA", x: 16, y: 41, flag: "🇺🇸" },
-  { city: "São Paulo", country: "Brazil", x: 35, y: 67, flag: "🇧🇷" },
-  { city: "London", country: "UK", x: 48.5, y: 31, flag: "🇬🇧" },
-  { city: "Frankfurt", country: "Germany", x: 51, y: 32, flag: "🇩🇪" },
-  { city: "Mumbai", country: "India", x: 68, y: 50, flag: "🇮🇳" },
-  { city: "Singapore", country: "Singapore", x: 76, y: 58, flag: "🇸🇬" },
-  { city: "Tokyo", country: "Japan", x: 86, y: 39, flag: "🇯🇵" },
-  { city: "Sydney", country: "Australia", x: 88.5, y: 73, flag: "🇦🇺" },
+  { city: "New York", country: "USA", x: 29.44, y: 25.62, flag: "🇺🇸" },
+  { city: "Los Angeles", country: "USA", x: 17.16, y: 29.32, flag: "🇺🇸" },
+  { city: "São Paulo", country: "Brazil", x: 37.05, y: 61.32, flag: "🇧🇷" },
+  { city: "London", country: "UK", x: 49.96, y: 19.62, flag: "🇬🇧" },
+  { city: "Frankfurt", country: "Germany", x: 52.41, y: 20.4, flag: "🇩🇪" },
+  { city: "Mumbai", country: "India", x: 70.24, y: 37.64, flag: "🇮🇳" },
+  { city: "Singapore", country: "Singapore", x: 78.84, y: 47.48, flag: "🇸🇬" },
+  { city: "Tokyo", country: "Japan", x: 88.8, y: 28.41, flag: "🇯🇵" },
+  { city: "Sydney", country: "Australia", x: 92.0, y: 67.05, flag: "🇦🇺" },
 ];
 
 // Great-circle-ish connections between hubs (just for visual flair)
