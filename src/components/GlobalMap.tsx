@@ -121,22 +121,50 @@ function Marker({ loc, delay }: { loc: Location; delay: number }) {
       className="absolute -translate-x-1/2 -translate-y-1/2 group z-10"
       style={{ left: `${loc.x}%`, top: `${loc.y}%` }}
     >
+      {/* outer expanding ring */}
       <motion.span
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/50"
-        animate={{ scale: [1, 3.5], opacity: [0.6, 0] }}
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
+        animate={{ scale: [1, 4], opacity: [0.7, 0] }}
         transition={{ duration: 2.4, repeat: Infinity, delay, ease: "easeOut" }}
-        style={{ width: 12, height: 12 }}
+        style={{
+          width: 10,
+          height: 10,
+          background: "radial-gradient(circle, rgba(255,138,31,0.6), transparent 70%)",
+        }}
       />
+      {/* mid ring */}
       <motion.span
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/30"
-        animate={{ scale: [1, 2.4], opacity: [0.5, 0] }}
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-orange-400/70"
+        animate={{ scale: [1, 2.6], opacity: [0.8, 0] }}
         transition={{ duration: 2.4, repeat: Infinity, delay: delay + 0.6, ease: "easeOut" }}
-        style={{ width: 12, height: 12 }}
+        style={{ width: 10, height: 10 }}
       />
-      <span
-        className="relative block h-2.5 w-2.5 rounded-full bg-electric"
-        style={{ boxShadow: "0 0 14px #00A8FF, 0 0 4px #fff" }}
+      {/* rotating halo */}
+      <motion.span
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+        style={{
+          width: 14,
+          height: 14,
+          background:
+            "conic-gradient(from 0deg, transparent 0deg, #FF8A1F 60deg, transparent 120deg)",
+          WebkitMask: "radial-gradient(circle, transparent 55%, #000 56%)",
+          mask: "radial-gradient(circle, transparent 55%, #000 56%)",
+        }}
       />
+      {/* core dot */}
+      <motion.span
+        className="relative block rounded-full"
+        animate={{ scale: [1, 1.25, 1], boxShadow: [
+          "0 0 6px #FF8A1F, 0 0 2px #fff",
+          "0 0 14px #FF8A1F, 0 0 4px #fff",
+          "0 0 6px #FF8A1F, 0 0 2px #fff",
+        ] }}
+        transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut", delay }}
+        style={{ width: 7, height: 7, background: "#FF8A1F" }}
+      />
+      {/* label */}
       <div className="pointer-events-none absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap rounded-md glass-strong px-2 py-1 text-[10px] font-medium opacity-0 group-hover:opacity-100 transition-opacity">
         {loc.flag} {loc.city}
       </div>
