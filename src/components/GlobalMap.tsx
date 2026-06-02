@@ -12,15 +12,15 @@ type Location = {
 };
 
 const LOCATIONS: Location[] = [
-  { city: "New York", country: "USA", x: 27.5, y: 38, flag: "🇺🇸" },
-  { city: "Los Angeles", country: "USA", x: 16, y: 41, flag: "🇺🇸" },
-  { city: "São Paulo", country: "Brazil", x: 35, y: 67, flag: "🇧🇷" },
-  { city: "London", country: "UK", x: 48.5, y: 31, flag: "🇬🇧" },
-  { city: "Frankfurt", country: "Germany", x: 51, y: 32, flag: "🇩🇪" },
-  { city: "Mumbai", country: "India", x: 68, y: 50, flag: "🇮🇳" },
-  { city: "Singapore", country: "Singapore", x: 76, y: 58, flag: "🇸🇬" },
-  { city: "Tokyo", country: "Japan", x: 86, y: 39, flag: "🇯🇵" },
-  { city: "Sydney", country: "Australia", x: 88.5, y: 73, flag: "🇦🇺" },
+  { city: "New York", country: "USA", x: 29.44, y: 25.62, flag: "🇺🇸" },
+  { city: "Los Angeles", country: "USA", x: 17.16, y: 29.32, flag: "🇺🇸" },
+  { city: "São Paulo", country: "Brazil", x: 37.05, y: 61.32, flag: "🇧🇷" },
+  { city: "London", country: "UK", x: 49.96, y: 19.62, flag: "🇬🇧" },
+  { city: "Frankfurt", country: "Germany", x: 52.41, y: 20.4, flag: "🇩🇪" },
+  { city: "Mumbai", country: "India", x: 70.24, y: 37.64, flag: "🇮🇳" },
+  { city: "Singapore", country: "Singapore", x: 78.84, y: 47.48, flag: "🇸🇬" },
+  { city: "Tokyo", country: "Japan", x: 88.8, y: 28.41, flag: "🇯🇵" },
+  { city: "Sydney", country: "Australia", x: 92.0, y: 67.05, flag: "🇦🇺" },
 ];
 
 // Great-circle-ish connections between hubs (just for visual flair)
@@ -78,14 +78,14 @@ export function GlobalMap() {
                 const d = `M ${A.x / 2} ${A.y / 2} Q ${mx / 2} ${my / 2} ${B.x / 2} ${B.y / 2}`;
                 return (
                   <g key={i}>
-                    <path d={d} stroke="#00A8FF" strokeOpacity="0.25" strokeWidth="0.15" fill="none" />
+                    <path d={d} stroke="#FF8A1F" strokeOpacity="0.35" strokeWidth="0.15" fill="none" strokeDasharray="0.6 0.6" />
                     <motion.circle
-                      r="0.4"
-                      fill="#00A8FF"
+                      r="0.35"
+                      fill="#FFB347"
                       initial={{ offsetDistance: "0%" }}
                       animate={{ offsetDistance: "100%" }}
                       transition={{ duration: 4 + (i % 3), repeat: Infinity, delay: i * 0.4, ease: "linear" }}
-                      style={{ offsetPath: `path('${d}')`, filter: "drop-shadow(0 0 1px #00A8FF)" } as React.CSSProperties}
+                      style={{ offsetPath: `path('${d}')`, filter: "drop-shadow(0 0 1.2px #FF8A1F)" } as React.CSSProperties}
                     />
                   </g>
                 );
@@ -121,22 +121,50 @@ function Marker({ loc, delay }: { loc: Location; delay: number }) {
       className="absolute -translate-x-1/2 -translate-y-1/2 group z-10"
       style={{ left: `${loc.x}%`, top: `${loc.y}%` }}
     >
+      {/* outer expanding ring */}
       <motion.span
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/50"
-        animate={{ scale: [1, 3.5], opacity: [0.6, 0] }}
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
+        animate={{ scale: [1, 4], opacity: [0.7, 0] }}
         transition={{ duration: 2.4, repeat: Infinity, delay, ease: "easeOut" }}
-        style={{ width: 12, height: 12 }}
+        style={{
+          width: 10,
+          height: 10,
+          background: "radial-gradient(circle, rgba(255,138,31,0.6), transparent 70%)",
+        }}
       />
+      {/* mid ring */}
       <motion.span
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/30"
-        animate={{ scale: [1, 2.4], opacity: [0.5, 0] }}
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-orange-400/70"
+        animate={{ scale: [1, 2.6], opacity: [0.8, 0] }}
         transition={{ duration: 2.4, repeat: Infinity, delay: delay + 0.6, ease: "easeOut" }}
-        style={{ width: 12, height: 12 }}
+        style={{ width: 10, height: 10 }}
       />
-      <span
-        className="relative block h-2.5 w-2.5 rounded-full bg-electric"
-        style={{ boxShadow: "0 0 14px #00A8FF, 0 0 4px #fff" }}
+      {/* rotating halo */}
+      <motion.span
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+        style={{
+          width: 14,
+          height: 14,
+          background:
+            "conic-gradient(from 0deg, transparent 0deg, #FF8A1F 60deg, transparent 120deg)",
+          WebkitMask: "radial-gradient(circle, transparent 55%, #000 56%)",
+          mask: "radial-gradient(circle, transparent 55%, #000 56%)",
+        }}
       />
+      {/* core dot */}
+      <motion.span
+        className="relative block rounded-full"
+        animate={{ scale: [1, 1.25, 1], boxShadow: [
+          "0 0 6px #FF8A1F, 0 0 2px #fff",
+          "0 0 14px #FF8A1F, 0 0 4px #fff",
+          "0 0 6px #FF8A1F, 0 0 2px #fff",
+        ] }}
+        transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut", delay }}
+        style={{ width: 7, height: 7, background: "#FF8A1F" }}
+      />
+      {/* label */}
       <div className="pointer-events-none absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap rounded-md glass-strong px-2 py-1 text-[10px] font-medium opacity-0 group-hover:opacity-100 transition-opacity">
         {loc.flag} {loc.city}
       </div>
