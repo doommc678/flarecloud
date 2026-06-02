@@ -9,8 +9,26 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VpsRouteImport } from './routes/vps'
+import { Route as VdsRouteImport } from './routes/vds'
+import { Route as MinecraftRouteImport } from './routes/minecraft'
 import { Route as IndexRouteImport } from './routes/index'
 
+const VpsRoute = VpsRouteImport.update({
+  id: '/vps',
+  path: '/vps',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VdsRoute = VdsRouteImport.update({
+  id: '/vds',
+  path: '/vds',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MinecraftRoute = MinecraftRouteImport.update({
+  id: '/minecraft',
+  path: '/minecraft',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +37,61 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/minecraft': typeof MinecraftRoute
+  '/vds': typeof VdsRoute
+  '/vps': typeof VpsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/minecraft': typeof MinecraftRoute
+  '/vds': typeof VdsRoute
+  '/vps': typeof VpsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/minecraft': typeof MinecraftRoute
+  '/vds': typeof VdsRoute
+  '/vps': typeof VpsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/minecraft' | '/vds' | '/vps'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/minecraft' | '/vds' | '/vps'
+  id: '__root__' | '/' | '/minecraft' | '/vds' | '/vps'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  MinecraftRoute: typeof MinecraftRoute
+  VdsRoute: typeof VdsRoute
+  VpsRoute: typeof VpsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/vps': {
+      id: '/vps'
+      path: '/vps'
+      fullPath: '/vps'
+      preLoaderRoute: typeof VpsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vds': {
+      id: '/vds'
+      path: '/vds'
+      fullPath: '/vds'
+      preLoaderRoute: typeof VdsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/minecraft': {
+      id: '/minecraft'
+      path: '/minecraft'
+      fullPath: '/minecraft'
+      preLoaderRoute: typeof MinecraftRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,6 +104,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  MinecraftRoute: MinecraftRoute,
+  VdsRoute: VdsRoute,
+  VpsRoute: VpsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
