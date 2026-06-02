@@ -78,14 +78,14 @@ export function GlobalMap() {
                 const d = `M ${A.x / 2} ${A.y / 2} Q ${mx / 2} ${my / 2} ${B.x / 2} ${B.y / 2}`;
                 return (
                   <g key={i}>
-                    <path d={d} stroke="#00A8FF" strokeOpacity="0.25" strokeWidth="0.15" fill="none" />
+                    <path d={d} stroke="#FF8A1F" strokeOpacity="0.35" strokeWidth="0.15" fill="none" strokeDasharray="0.6 0.6" />
                     <motion.circle
-                      r="0.4"
-                      fill="#00A8FF"
+                      r="0.35"
+                      fill="#FFB347"
                       initial={{ offsetDistance: "0%" }}
                       animate={{ offsetDistance: "100%" }}
                       transition={{ duration: 4 + (i % 3), repeat: Infinity, delay: i * 0.4, ease: "linear" }}
-                      style={{ offsetPath: `path('${d}')`, filter: "drop-shadow(0 0 1px #00A8FF)" } as React.CSSProperties}
+                      style={{ offsetPath: `path('${d}')`, filter: "drop-shadow(0 0 1.2px #FF8A1F)" } as React.CSSProperties}
                     />
                   </g>
                 );
